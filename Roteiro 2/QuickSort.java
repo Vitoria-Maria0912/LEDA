@@ -17,12 +17,14 @@ public class QuickSort<T extends Comparable<T>> extends AbstractSorting<T> {
 	public void sort(T[] array, int leftIndex, int rightIndex) {
 		
 		if(leftIndex < 0 || rightIndex <= leftIndex || rightIndex >= array.length || array.length == 1) {
+		
+		} else {
+			
+			int indexPivot = partition(array, leftIndex, rightIndex);
+			
+			sort(array, leftIndex, indexPivot - 1);
+			sort(array, indexPivot + 1, rightIndex);
 		}
-		
-		int indexPivot = partition(array, leftIndex, rightIndex);
-		
-		sort(array, leftIndex, indexPivot - 1);
-		sort(array, indexPivot + 1, rightIndex);
 	}
 
 	private int partition(T[] array, int leftIndex, int rightIndex) {
