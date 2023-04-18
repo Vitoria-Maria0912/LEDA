@@ -40,14 +40,16 @@ public class HybridMergeSort<T extends Comparable<T>> extends AbstractSorting<T>
 			
 			if(array.length <= SIZE_LIMIT) {
 				insertionSort(array, leftIndex, rightIndex);
+			
+			} else {
+				
+				int middle = (leftIndex + rightIndex) / 2;
+				
+				sort(array, leftIndex, middle);
+				sort(array, middle + 1, rightIndex);
+				
+				mergeSort(array, leftIndex, middle, rightIndex);
 			}
-			
-			int middle = (leftIndex + rightIndex) / 2;
-			
-			sort(array, leftIndex, middle);
-			sort(array, middle + 1, rightIndex);
-			
-			mergeSort(array, leftIndex, middle, rightIndex);
 		}
 	}
 
