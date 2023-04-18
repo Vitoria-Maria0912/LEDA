@@ -14,9 +14,9 @@ public class MergeSort<T extends Comparable<T>> extends AbstractSorting<T> {
 	public void sort(T[] array, int leftIndex, int rightIndex) {
 		
 		if(leftIndex < 0 || rightIndex <= leftIndex || rightIndex >= array.length || array.length == 1) {
-		}
 		
-		else {
+		} else {
+			
 			int middle = (leftIndex + rightIndex) / 2;
 			
 			sort(array, leftIndex, middle);
