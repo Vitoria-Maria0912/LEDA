@@ -17,13 +17,35 @@ public class CountingSort extends AbstractSorting<Integer> {
 
 	@Override
 	public void sort(Integer[] array, int leftIndex, int rightIndex) {
-		if(leftIndex < 0 || leftIndex >= rightIndex || rightIndex >= array.length) {
-		} else {
+		if(!(leftIndex < 0 || leftIndex >= rightIndex || rightIndex >= array.length)) {
 			coutingSort(array, rightIndex, rightIndex);
 		}
 	}
 
 	private void coutingSort(Integer[] array, int leftIndex, int rightIndex) {
+
+		int maior = array[leftIndex];
 		
+		for(int index = leftIndex + 1; index <= rightIndex; index++) {
+			if(array[index] > maior) {
+				maior = array[index];
+			}
+		}
+		int[] arrayQuantidades = new int[maior];
+		
+		for(int index = leftIndex; index <= rightIndex; index++) {
+			arrayQuantidades[array[index] - 1]++; 
+		}
+		
+		for(int index = leftIndex + 1; index < arrayQuantidades.length; index++) {
+			arrayQuantidades[index] = arrayQuantidades[index] + arrayQuantidades[index - 1]; 
+		}
+		
+		int[] arrayOrdenado = new int[array.length];
+		
+		for(int index = rightIndex; index >= 0; index--) {
+			array[arrayQuantidades[array[index - 1] - 1]] = array[index];
+			arrayQuantidades[array[index] - 1] --;
+		}
 	}
 }
