@@ -23,7 +23,45 @@ public class CountingSort extends AbstractSorting<Integer> {
 	}
 
 	private void coutingSort(Integer[] array, int leftIndex, int rightIndex) {
+		
+		boolean temZero = checaSeTemZero(array, leftIndex, rightIndex);
 
+		int[] arrayQuantidades = new int[calculaMaior(array, leftIndex, rightIndex) + 1];
+		
+		for(int index = leftIndex; index <= rightIndex; index++) {
+			arrayQuantidades[array[index]]++; 
+		}
+		
+		for(int index = 1; index < arrayQuantidades.length; index++) {
+			arrayQuantidades[index] += arrayQuantidades[index - 1]; 
+		}
+		
+		int[] arrayOrdenado = new int[rightIndex - leftIndex + 1];
+		
+		for(int index = rightIndex; index >= leftIndex; index--) {
+			arrayOrdenado[arrayQuantidades[array[index] - 1]] = array[index];
+			arrayQuantidades[array[index]] --;
+		}
+		
+		int indiceOrdenacao = 0;
+		
+		for(int index = leftIndex; index <= rightIndex; index++) {
+			array[index] = arrayOrdenado[indiceOrdenacao];
+			indiceOrdenacao++; 
+		}
+	}
+
+	private boolean checaSeTemZero(Integer[] array, int leftIndex, int rightIndex) {
+		for(int index = leftIndex + 1; index <= rightIndex; index++) {
+			if(array[index] == 0) {
+				return true;
+			}
+		}
+		return false;
+	}
+
+	private int calculaMaior(Integer[] array, int leftIndex, int rightIndex) {
+		
 		int maior = array[leftIndex];
 		
 		for(int index = leftIndex + 1; index <= rightIndex; index++) {
@@ -31,21 +69,6 @@ public class CountingSort extends AbstractSorting<Integer> {
 				maior = array[index];
 			}
 		}
-		int[] arrayQuantidades = new int[maior];
-		
-		for(int index = leftIndex; index <= rightIndex; index++) {
-			arrayQuantidades[array[index] - 1]++; 
-		}
-		
-		for(int index = leftIndex + 1; index < arrayQuantidades.length; index++) {
-			arrayQuantidades[index] = arrayQuantidades[index] + arrayQuantidades[index - 1]; 
-		}
-		
-		int[] arrayOrdenado = new int[array.length];
-		
-		for(int index = rightIndex; index >= 0; index--) {
-			array[arrayQuantidades[array[index - 1] - 1]] = array[index];
-			arrayQuantidades[array[index] - 1] --;
-		}
+		return maior;
 	}
 }
