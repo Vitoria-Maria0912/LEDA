@@ -26,7 +26,7 @@ public class CountingSort extends AbstractSorting<Integer> {
 		
 		int[] arrayQuantidades = new int[calculaMaior(array, leftIndex, rightIndex) + 1];
 		
-		for (int index = leftIndex; index <= rightIndex; index++) {
+		for(int index = leftIndex; index <= rightIndex; index++) {
 			arrayQuantidades[array[index]] ++; 
 		}
 		
