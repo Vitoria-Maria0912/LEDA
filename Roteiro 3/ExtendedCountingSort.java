@@ -13,11 +13,11 @@ public class ExtendedCountingSort extends AbstractSorting<Integer> {
 	@Override
 	public void sort(Integer[] array, int leftIndex, int rightIndex) {
 		if(!(leftIndex < 0 || leftIndex >= rightIndex || rightIndex >= array.length)) {
-			coutingSort(array, leftIndex, rightIndex);
+			countingSort(array, leftIndex, rightIndex);
 		}
 	}
 
-	private void coutingSort(Integer[] array, int leftIndex, int rightIndex) {
+	private void countingSort(Integer[] array, int leftIndex, int rightIndex) {
 		
 		int maior = calculaMaior(array, leftIndex, rightIndex);
 		int menor = calculaMenor(array, leftIndex, rightIndex);
@@ -25,18 +25,18 @@ public class ExtendedCountingSort extends AbstractSorting<Integer> {
 		int[] arrayQuantidades = new int[maior - menor + 1];
 		
 		for(int index = leftIndex; index <= rightIndex; index++) {
-			arrayQuantidades[array[index] - menor]++; 
+			arrayQuantidades[array[index] - menor] ++; 
 		}
 		
 		for(int index = 1; index < arrayQuantidades.length; index++) {
 			arrayQuantidades[index] += arrayQuantidades[index - 1]; 
 		}
 		
-		int[] arrayOrdenado = new int[rightIndex - leftIndex + 2]; // isso esta errado, é + 1
+		int[] arrayOrdenado = new int[rightIndex - leftIndex + 1];
 		
 		for(int index = rightIndex; index >= leftIndex; index--) {
-			arrayOrdenado[arrayQuantidades[array[index] - menor]] = array[index];
-			arrayQuantidades[array[index] - menor] --;
+			arrayOrdenado[arrayQuantidades[array[index] - menor] - 1] = array[index];
+			arrayQuantidades[array[index] - menor]--;
 		}
 		
 		int indiceOrdenacao = 0;
@@ -46,7 +46,7 @@ public class ExtendedCountingSort extends AbstractSorting<Integer> {
 			indiceOrdenacao++; 
 		}
 	}
-	
+
 	private int calculaMenor(Integer[] array, int leftIndex, int rightIndex) {
 		
 		int menor = array[leftIndex];
@@ -58,7 +58,7 @@ public class ExtendedCountingSort extends AbstractSorting<Integer> {
 		}
 		return menor;
 	}
-
+	
 	private int calculaMaior(Integer[] array, int leftIndex, int rightIndex) {
 		
 		int maior = array[leftIndex];
