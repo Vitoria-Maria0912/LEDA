@@ -18,18 +18,16 @@ public class CountingSort extends AbstractSorting<Integer> {
 	@Override
 	public void sort(Integer[] array, int leftIndex, int rightIndex) {
 		if(!(leftIndex < 0 || leftIndex >= rightIndex || rightIndex >= array.length)) {
-			coutingSort(array, rightIndex, rightIndex);
+			coutingSort(array, leftIndex, rightIndex);
 		}
 	}
-
+	
 	private void coutingSort(Integer[] array, int leftIndex, int rightIndex) {
 		
-		boolean temZero = checaSeTemZero(array, leftIndex, rightIndex);
-
 		int[] arrayQuantidades = new int[calculaMaior(array, leftIndex, rightIndex) + 1];
 		
-		for(int index = leftIndex; index <= rightIndex; index++) {
-			arrayQuantidades[array[index]]++; 
+		for (int index = leftIndex; index <= rightIndex; index++) {
+			arrayQuantidades[array[index]] ++; 
 		}
 		
 		for(int index = 1; index < arrayQuantidades.length; index++) {
@@ -39,7 +37,7 @@ public class CountingSort extends AbstractSorting<Integer> {
 		int[] arrayOrdenado = new int[rightIndex - leftIndex + 1];
 		
 		for(int index = rightIndex; index >= leftIndex; index--) {
-			arrayOrdenado[arrayQuantidades[array[index] - 1]] = array[index];
+			arrayOrdenado[arrayQuantidades[array[index]] - 1] = array[index];
 			arrayQuantidades[array[index]] --;
 		}
 		
@@ -49,15 +47,6 @@ public class CountingSort extends AbstractSorting<Integer> {
 			array[index] = arrayOrdenado[indiceOrdenacao];
 			indiceOrdenacao++; 
 		}
-	}
-
-	private boolean checaSeTemZero(Integer[] array, int leftIndex, int rightIndex) {
-		for(int index = leftIndex + 1; index <= rightIndex; index++) {
-			if(array[index] == 0) {
-				return true;
-			}
-		}
-		return false;
 	}
 
 	private int calculaMaior(Integer[] array, int leftIndex, int rightIndex) {
