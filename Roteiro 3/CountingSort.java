@@ -18,11 +18,11 @@ public class CountingSort extends AbstractSorting<Integer> {
 	@Override
 	public void sort(Integer[] array, int leftIndex, int rightIndex) {
 		if(!(leftIndex < 0 || leftIndex >= rightIndex || rightIndex >= array.length)) {
-			coutingSort(array, leftIndex, rightIndex);
+			countingSort(array, leftIndex, rightIndex);
 		}
 	}
 	
-	private void coutingSort(Integer[] array, int leftIndex, int rightIndex) {
+	private void countingSort(Integer[] array, int leftIndex, int rightIndex) {
 		
 		int[] arrayQuantidades = new int[calculaMaior(array, leftIndex, rightIndex) + 1];
 		
