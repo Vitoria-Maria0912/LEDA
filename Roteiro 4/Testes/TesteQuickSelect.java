@@ -64,4 +64,15 @@ class TesteQuickSelect {
 		
 		assertEquals(1, result);
 	}
+	
+	@Test
+	public void test6() {
+		try {
+			Integer[] array = new Integer [] {null};
+			int result = quick.quickSelect(array, 1);
+			
+			assertEquals(null, result);
+		} catch(NullPointerException e) {
+		}
+	}
 }
