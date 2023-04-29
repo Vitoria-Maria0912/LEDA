@@ -25,10 +25,7 @@ public class StartEndPositionImpl implements StartEndPosition{
 		int last = binaryLast(array, 0, array.length - 1, x);
 		
 		if(!(array.length == 0 || array == null || first == -1 || last == -1)) {
-			
-			int[] esta = new int[] {first, last};
-			
-			return esta;
+			return new int[] {first, last};
 			
 		} else {
 			return new int[] {-1,-1};
