@@ -21,8 +21,6 @@ public class StartEndPositionImpl implements StartEndPosition{
 	@Override
 	public int[] startEndPosition(Integer[] array, Integer x){
 		
-		int[] naoEsta = new int[] {-1,-1};
-		
 		int first = binaryFist(array, 0, array.length - 1, x);
 		int last = binaryLast(array, 0, array.length - 1, x);
 		
@@ -33,7 +31,7 @@ public class StartEndPositionImpl implements StartEndPosition{
 			return esta;
 			
 		} else {
-			return naoEsta;
+			return new int[] {-1,-1};
 		}
 	}
 
