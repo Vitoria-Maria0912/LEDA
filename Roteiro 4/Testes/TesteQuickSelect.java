@@ -97,8 +97,8 @@ class TesteQuickSelect {
 	
 	@Test
 	public void test9() {
-		Integer[] array = new Integer [] {1, 2, 3, 5, 10};
-		int result = quick.quickSelect(array, 3);
+		Integer[] array = new Integer [] {1, 2, 3, 5, 10, 0};
+		int result = quick.quickSelect(array, 4);
 		
 		assertEquals(3, result);
 	}
