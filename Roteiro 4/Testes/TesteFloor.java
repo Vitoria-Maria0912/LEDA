@@ -45,10 +45,10 @@ public class TesteFloor {
 	@Test
 	public void test4() {
 		FloorBinarySearchImpl floorBinarySearch = new FloorBinarySearchImpl();
-		Integer[] array = new Integer [] {1, 2, 4, 5};
-		int result = floorBinarySearch.floor(array, 5);
+		Integer[] array = new Integer [] {-1, 2, 4, 5};
+		int result = floorBinarySearch.floor(array, 0);
 		
-		assertEquals(5, result);
+		assertEquals(-1, result);
 	}
 	
 	@Test
