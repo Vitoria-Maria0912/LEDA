@@ -1,5 +1,7 @@
 package orderStatistic;
 
+import util.Util;
+
 /**
  * Uma implementacao da interface KLargest que usa estatisticas de ordem para 
  * retornar um array com os k maiores elementos de um conjunto de dados/array.
@@ -31,9 +33,10 @@ public class KLargestOrderStatisticsImpl<T extends Comparable<T>> implements KLa
 	public T[] getKLargest(T[] array, int k) {
 		
 		if(orderStatistics(array, k) != null) {
-
+			return kLarguestArray(array, k);
 		}
-		return array;
+		
+		return (T[]) new Comparable[0];
 	}
 
 	/**
@@ -49,19 +52,45 @@ public class KLargestOrderStatisticsImpl<T extends Comparable<T>> implements KLa
 	 */
 	public T orderStatistics(T[] array, int k){
 		
-		if(!(k <= 0 || k > array.length)) {
-			array = ordenaArray(array, k);
+		if(k > 0 && k <= array.length) {
 			
-			for(int index = 0; index < array.length; index++) {
-				if(index == k) {
-					return array[index];
-				}
-			}
-		} 
-		return null;
+			array = ordena(array, 0, array.length - 1);
+			
+			return array[k - 1];
+			
+		} else {
+			return null;			
+		}
 	}
 
-	private T[] ordenaArray(T[] array, int k) { // criar um array de tamanho k
+	private T[] kLarguestArray(T[] array, int k) {
+		
+		T[] KLargest = (T[]) new Comparable[k];
+		
+		array = ordena(array, 0, array.length - 1);
+		
+		for(int index = 0; index < k; index++) {
+			KLargest[index] = array[index];
+		}
+		
+		return KLargest;
+	}
+	
+	public T[] ordena(T[] array, int left, int right) {
+		
+		int indexExterno = left + 1;
+		
+		while(indexExterno <= right) {
+			
+			int indexInterno = indexExterno;
+			
+			while(indexInterno > left && array[indexInterno].compareTo(array[indexInterno - 1]) < 0) {
+				Util.swap(array, indexInterno, indexInterno - 1);
+				indexInterno--;
+			}
+			indexExterno++;
+		}
+		
 		return array;
 	}
 }
