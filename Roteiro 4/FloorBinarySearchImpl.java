@@ -7,82 +7,62 @@ public class FloorBinarySearchImpl implements Floor {
 	@Override
 	public Integer floor(Integer[] array, Integer x) {
 		
-		if(array.length == 0 || recursiveFloor(array, x, 0, array.length - 1) == -1 ) {
+		if(array.length == 0 || x == null || recursiveFloor(array, x, null, 0, array.length - 1) == null) {
 			return null;
 			
 		} else {
-			return recursiveFloor(array, x, 0, array.length - 1);
+			ordenaArray(array, 0, array.length - 1);
+			return recursiveFloor(array, x, null, 0, array.length - 1);
 		}
 	}
 	
-	private Integer recursiveFloor(Integer[] array, Integer x, int left, int right) {
+	private Integer recursiveFloor(Integer[] array, Integer x, Integer floor, int left, int right) {
 		
-		array = ordenaArray(array);
+		if(left >= 0 && left <= right && right < array.length) {
 		
-		int middle = (left + right) / 2;
-		
-		int floor = -1;
-		
-		if(array[right] <= x) {
-			return array[right];
+			int middle = (left + right) / 2;
 			
-		} else if(array[left] > x) {
-			return -1;
-			
-		} else if(left < right) {
-			
-			if(array[middle] > x) {
-				recursiveFloor(array, x, left, middle - 1);
+			if(array[middle] == x) {
+				return array[middle];
+				
+			} else if(array[middle] > x) {
+				return recursiveFloor(array, x, floor, left, middle - 1);
 				
 			} else if(array[middle] < x) {
-				recursiveFloor(array, x, middle + 1, right);
-				floor = array[middle];
-			}
-			else {
-				return array[middle];
+				return recursiveFloor(array, x, array[middle], middle + 1, right);
 			}
 		}
-		
+
 		return floor;
 	}
 
-	private Integer[] ordenaArray(Integer[] array) {
+	private int partition(Integer[] array, int first, int last) {
 		
-		int first = 0;
-		int last = array.length - 1;
-		
-		int indexPivot = pivotMedianOfThree(array, first, last);
-		int auxiliar = last - 1;
-		
-		Util.swap(array, indexPivot, last - 1);
-		
-		Integer pivot = array[last - 1];
-		
-		for(int index = auxiliar - 1; index >= first + 1; index--) {
-			if(array[index].compareTo(pivot) >= 0) {
-				auxiliar--;
-                Util.swap(array, auxiliar, index);
-            }
+		int pivot = array[first];
+		int auxiliar = first;
+
+		for (int j = first + 1; j <= last; j++) {
+			if (array[j].compareTo(pivot) <= 0) {
+				auxiliar += 1;
+				Util.swap(array, auxiliar, j);
+			}
 		}
-		
-		Util.swap(array, auxiliar, last - 1);
-		
-		return array;
+
+		Util.swap(array, first, auxiliar);
+
+		return auxiliar;
 	}
 	
-	private int pivotMedianOfThree(Integer[] array, int first, int last) {
-	
-		int center = (first + last) / 2;
-	
-		if (array[last].compareTo(array[first]) <= 0) {
-			Util.swap(array, last, first);
+	public void ordenaArray(Integer[] array, int left, int right) {
+		
+		if(left < 0 || right <= left || right >= array.length || array.length == 1) {
+			
+		} else {
+			
+			int pivotIndex = partition(array, left, right);
+			
+			ordenaArray(array, left, pivotIndex - 1);
+			ordenaArray(array, pivotIndex + 1, right);
 		}
-		if (array[center].compareTo(array[first]) <= 0) {
-			Util.swap(array, center, first);
-		}
-		if (array[last].compareTo(array[center]) <= 0) {
-			Util.swap(array, last, center);
-		}
-		return center;
 	}
 }
