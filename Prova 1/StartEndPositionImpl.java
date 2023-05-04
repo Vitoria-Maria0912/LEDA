@@ -21,7 +21,7 @@ public class StartEndPositionImpl implements StartEndPosition{
 	@Override
 	public int[] startEndPosition(Integer[] array, Integer x){
 		
-		int first = binaryFist(array, 0, array.length - 1, x);
+		int first = binaryFirst(array, 0, array.length - 1, x);
 		int last = binaryLast(array, 0, array.length - 1, x);
 		
 		if(!(array.length == 0 || array == null || first == -1 || last == -1)) {
@@ -32,43 +32,59 @@ public class StartEndPositionImpl implements StartEndPosition{
 		}
 	}
 
-	private int binaryFist(Integer[] array, int i, int f, int x) {
+	private int binaryFirst(Integer[] array, int i, int f, int x) {
 		
-		int mid = (i + f) / 2;
+		int first = -1;
 		
-		if(array[i] == x) {
-			return i;
-		}
-		
-		else if(i <= f) {
-		
-			if(array[mid] >= x) {
-				return binaryFist(array, i + 1, mid - 1, x);
-				
-			} else {
-				return binaryFist(array, mid + 1, f, x);
+		if(i <= f) {
+			
+			if(array[i] == x) {
+				return i;
 			}
+			
+			int mid = (i + f) / 2;
+			
+			if(array[mid] == x && array[mid - 1] < x) {
+				first = mid;
+		
+			} else if(array[mid] > x) {
+				first = binaryFirst(array, i, mid - 1, x);
+				
+			} else if(array[mid] < x){
+				first = binaryFirst(array, mid + 1, f, x);
+			
+			} else {
+				first = mid;
+				first = binaryFirst(array, i, mid - 1, x);
 		}
-		return -1;
+		return first;
 	}
 	
 	private int binaryLast(Integer[] array, int i, int f, int x) {
 		
-		int mid = (i + f) / 2;
+		int last = - 1;
 		
-		if(array[f] == x) {
-			return f;
-		}
-		
-		else if(i <= f) {
+		if(i <= f) {
 			
-			if(array[mid] >= x) {
-				return binaryFist(array, i, mid, x);
-				
-			} else if(array[mid] > x && array[mid + 1] > x){
-				return binaryFist(array, mid + 1, f - 1, x);
+			if(array[f] == x) {
+				return f;
 			}
+			
+			int mid = (i + f) / 2;
+			
+			if(array[mid] == x && array[mid + 1] > x) {
+				last = mid;
+				
+			} else if(array[mid] > x) {
+				last = binaryLast(array, i, mid, x);
+				
+			} else if(array[mid] < x){
+				last = binaryLast(array, mid + 1, f, x);
+			
+			} else {
+				last = mid;
+				last = last = binaryLast(array, mid + 1, f, x);
 		}
-		return -1;
+		return last;
 	}
 }
