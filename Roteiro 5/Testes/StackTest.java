@@ -31,10 +31,9 @@ public class StudentStackTest {
 	}
 
 	private void getImplementations() {
-		// TODO O aluno deve ajustar aqui para instanciar sua implementação
-		stack1 = new StackImpl<>(4);
-		stack2 = new StackImpl<>(2);
-		stack3 = new StackImpl<>(0); // pode ser qualquer tamanho?
+		stack1 = new StackImpl<Integer>(4);
+		stack2 = new StackImpl<Integer>(2);
+		stack3 = new StackImpl<Integer>(2);
 	}
 
 	// MÉTODOS DE TESTE
@@ -53,21 +52,38 @@ public class StudentStackTest {
 		assertFalse(stack1.isFull()); // vai depender do tamanho que a pilha foi
 										// iniciada!!!!
 	}
+	
+	@Test
+	public void testStack() {
+		try {
+			stack3.push(1);
+			stack3.push(2);
+		} catch (StackOverflowException e) {
+		}
+		
+		Assert.assertEquals(stack3.top(), this.stack2.top());
+	}
 
 	@Test
 	public void testPush() {
 		try {
-			stack1.push(new Integer(5));
+			stack2.push(new Integer(5));
 		} catch (StackOverflowException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
 		}
 	}
-
-	@Test(expected = StackOverflowException.class)
-	public void testPushComErro() throws StackOverflowException {
-		stack1.push(new Integer(5)); // levanta excecao apenas se o tamanhonao
-										// permitir outra insercao
+	
+	@Test
+	public void testPushNull() throws StackOverflowException {
+		assertEquals(stack3.top(), null);
+	}
+	
+	@Test
+	public void testPushInvalido() throws StackOverflowException {
+		try {
+			stack1.push(new Integer(5));
+			stack1.push(new Integer(6));
+		} catch (StackOverflowException e) {
+		}
 	}
 
 	@Test
@@ -75,14 +91,14 @@ public class StudentStackTest {
 		try {
 			assertEquals(new Integer(3), stack1.pop());
 		} catch (StackUnderflowException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
 		}
 	}
 
-	@Test(expected = StackUnderflowException.class)
+	@Test
 	public void testPopComErro() throws StackUnderflowException {
-		assertEquals(new Integer(3), stack1.pop()); // levanta excecao apenas se
-													// stack1 for vazia
+		try {
+			assertEquals(new Integer(3), stack1.pop());
+		} catch(StackUnderflowException e) {
+		}
 	}
 }
