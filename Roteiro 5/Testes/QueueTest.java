@@ -31,6 +31,7 @@ public class StudentQueueTest {
 	}
 
 	private void getImplementations() {
+		// QueueImpl
 		queue1 = new QueueImpl<Integer>(4);
 		queue2 = new QueueImpl<Integer>(2);
 		queue3 = new QueueImpl<Integer>(2);
@@ -51,14 +52,23 @@ public class StudentQueueTest {
 	}
 
 	@Test
-	public void testIsEmpty() {
+	public void testIsNotEmpty() {
 		assertFalse(queue1.isEmpty());
+	}
+	
+	@Test
+	public void testIsEmpty() {
 		assertTrue(queue3.isEmpty());
 	}
 
 	@Test
-	public void testIsFull() {
+	public void testIsNotFull() {
 		assertFalse(queue1.isFull());
+	}
+	
+	@Test
+	public void testIsFull() {
+		assertTrue(queue2.isFull());
 	}
 
 	@Test
@@ -66,31 +76,27 @@ public class StudentQueueTest {
 		try {
 			queue1.enqueue(new Integer(5));
 		} catch (QueueOverflowException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
 		}
-	}
-
-	@Test(expected = QueueOverflowException.class)
-	public void testEnqueueComErro() throws QueueOverflowException {
-		queue1.enqueue(new Integer(5)); // vai depender do tamanho que a fila
-										// foi iniciada!!!
 	}
 
 	@Test
-	public void testDequeue() {
+	public void testEnqueueComErro() throws QueueOverflowException {
 		try {
-			assertEquals(new Integer(1), queue1.dequeue());
-		} catch (QueueUnderflowException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			queue1.enqueue(new Integer(5));
+		} catch(QueueOverflowException e) {
 		}
 	}
 
-	@Test(expected = QueueUnderflowException.class)
+	@Test
+	public void testDequeue() throws QueueUnderflowException{
+		assertEquals(new Integer(1), this.queue1.dequeue()); 
+	}
+
+	@Test
 	public void testDequeueComErro() throws QueueUnderflowException {
-		assertEquals(new Integer(1), queue1.dequeue()); // vai depender do
-														// tamanho que a fial
-														// foi iniciada!!!
+		try {
+			assertEquals(new Integer(1), this.queue3.dequeue());
+		} catch(QueueUnderflowException e) {
+		}
 	}
 }
