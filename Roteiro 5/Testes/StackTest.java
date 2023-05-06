@@ -31,9 +31,9 @@ public class StudentStackTest {
 	}
 
 	private void getImplementations() {
-		stack1 = new StackImpl<Integer>(4);
-		stack2 = new StackImpl<Integer>(2);
-		stack3 = new StackImpl<Integer>(2);
+		stack1 = new StackImpl<>(4);
+		stack2 = new StackImpl<>(2);
+		stack3 = new StackImpl<>(2);
 	}
 
 	// MÉTODOS DE TESTE
@@ -43,47 +43,38 @@ public class StudentStackTest {
 	}
 
 	@Test
-	public void testIsEmpty() {
+	public void testIsNotEmpty() {
 		assertFalse(stack1.isEmpty());
 	}
 
 	@Test
-	public void testIsFull() {
+	public void testIsNotFull() {
 		assertFalse(stack1.isFull()); // vai depender do tamanho que a pilha foi
 										// iniciada!!!!
 	}
 	
 	@Test
-	public void testStack() {
-		try {
-			stack3.push(1);
-			stack3.push(2);
-		} catch (StackOverflowException e) {
-		}
-		
-		Assert.assertEquals(stack3.top(), this.stack2.top());
+	public void testIsEmpty() {
+		assertTrue(stack3.isEmpty());
+	}
+
+	@Test
+	public void testIsFull() {
+		assertTrue(stack2.isFull()); 
 	}
 
 	@Test
 	public void testPush() {
 		try {
-			stack2.push(new Integer(5));
-		} catch (StackOverflowException e) {
-		}
-	}
-	
-	@Test
-	public void testPushNull() throws StackOverflowException {
-		assertEquals(stack3.top(), null);
-	}
-	
-	@Test
-	public void testPushInvalido() throws StackOverflowException {
-		try {
 			stack1.push(new Integer(5));
-			stack1.push(new Integer(6));
 		} catch (StackOverflowException e) {
 		}
+	}
+
+	@Test
+	public void testPushComErro() throws StackOverflowException {
+		stack1.push(new Integer(5)); // levanta excecao apenas se o tamanho nao
+										// permitir outra insercao
 	}
 
 	@Test
@@ -96,9 +87,7 @@ public class StudentStackTest {
 
 	@Test
 	public void testPopComErro() throws StackUnderflowException {
-		try {
-			assertEquals(new Integer(3), stack1.pop());
-		} catch(StackUnderflowException e) {
-		}
+		assertEquals(new Integer(3), stack1.pop()); // levanta excecao apenas se
+													// stack1 for vazia
 	}
 }
