@@ -17,32 +17,28 @@ public class SingleLinkedListImpl<T> implements LinkedList<T> {
 	public int size() {
 		
 		int size = 0;
-	        
-        SingleLinkedListNode<T> aux = getHead();
-        
-        while(!(aux.isNIL())){
-            size++;
-            aux = aux.getNext();
-        }
+		
+		SingleLinkedListNode<T> aux = getHead();
+		
+		while(!(aux.isNIL())) {
+			aux = aux.getNext();
+			size++;
+		}
 		return size;
 	}
 
 	@Override
 	public T search(T element) {
 		
-		T search = null;
-        
-        if(isEmpty() || element == null) {
-       
-        } else {
-            SingleLinkedListNode<T> aux = getHead();
-        
-            while(!(aux.isNIL()) && !(aux.getData().equals(element))) {
-                aux = aux.getNext();
-            }
-            search = aux.getData();
-        }
-		return search;
+		SingleLinkedListNode<T> aux = getHead();
+		
+		if(!(isEmpty()) && element != null) {
+			
+			while(!(aux.isNIL()) && !(aux.getData().equals(element))) {
+				aux = aux.getNext();
+			}
+		}
+		return aux.getData();
 	}
 
 	@Override
@@ -51,30 +47,34 @@ public class SingleLinkedListImpl<T> implements LinkedList<T> {
 		if(element != null) {
 			
 			SingleLinkedListNode<T> aux = getHead();
-			SingleLinkedListNode<T> newAux = new SingleLinkedListNode<>(element, this.getHead());
+			SingleLinkedListNode<T> newAux = new SingleLinkedListNode<T> (element, getHead());
 			
-            if(isEmpty()) {
+			if(isEmpty()) {
 				setHead(newAux);
 				
-            } else {
-                while(!(aux.isNIL())) {
-                    aux = aux.getNext();
-                }
-				aux.data = element;
-				aux.next = new SingleLinkedListNode<>();
-            }  
+			} else {
+				while(!(aux.isNIL())) {
+					aux = aux.getNext();
+				}
+				aux.setData(element);;
+				aux.setNext(new SingleLinkedListNode<>());
+			}
 		}
 	}
 
 	@Override
 	public void remove(T element) {
+		
 		if(!(isEmpty()) && element != null) {
 			
 			SingleLinkedListNode<T> aux = getHead();
 			
 			if(getHead().getData().equals(element)) {
+				
 				setHead(getHead().getNext());
+							
 			} else {
+				
 				while(!(aux.isNIL()) && !(aux.getData().equals(element))) {
 					aux = aux.getNext();
 				}
