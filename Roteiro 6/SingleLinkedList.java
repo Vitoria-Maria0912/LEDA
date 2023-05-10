@@ -15,24 +15,24 @@ public class SingleLinkedListImpl<T> implements LinkedList<T> {
 
 	@Override
 	public int size() {
-        
-        int size = 0;
-        
+		
+		int size = 0;
+	        
         SingleLinkedListNode<T> aux = getHead();
         
         while(!(aux.isNIL())){
             size++;
             aux = aux.getNext();
         }
-	return size;
+		return size;
 	}
 
 	@Override
 	public T search(T element) {
-        
+		
 		T search = null;
         
-        if(isEmpty || element == null) {
+        if(isEmpty() || element == null) {
        
         } else {
             SingleLinkedListNode<T> aux = getHead();
@@ -47,12 +47,13 @@ public class SingleLinkedListImpl<T> implements LinkedList<T> {
 
 	@Override
 	public void insert(T element) {
-        if(element != null) {
+		
+		if(element != null) {
 			
 			SingleLinkedListNode<T> aux = getHead();
 			SingleLinkedListNode<T> newAux = new SingleLinkedListNode<>(element, this.getHead());
 			
-            if(isEmpty) {
+            if(isEmpty()) {
 				setHead(newAux);
 				
             } else {
@@ -61,7 +62,8 @@ public class SingleLinkedListImpl<T> implements LinkedList<T> {
                 }
 				aux.data = element;
 				aux.next = new SingleLinkedListNode<>();
-            }    
+            }  
+		}
 	}
 
 	@Override
@@ -70,16 +72,15 @@ public class SingleLinkedListImpl<T> implements LinkedList<T> {
 			
 			SingleLinkedListNode<T> aux = getHead();
 			
-			if(getHead().getData.equals(element)) {
+			if(getHead().getData().equals(element)) {
 				setHead(getHead().getNext());
 			} else {
 				while(!(aux.isNIL()) && !(aux.getData().equals(element))) {
 					aux = aux.getNext();
 				}
-				if(!(aux.getData().isNIL()) {
-					setData(aux.getNext().getData());
-					setNext(aux.getNext().getNext());
-					aux.getData() = 
+				if(!(aux.isNIL())) {
+					aux.setData(aux.getNext().getData());
+					aux.setNext(aux.getNext().getNext());
 				}
 			}
 		}
@@ -87,16 +88,18 @@ public class SingleLinkedListImpl<T> implements LinkedList<T> {
 
 	@Override
 	public T[] toArray() {
+		
+		@SuppressWarnings("unchecked")
 		T[] array = (T[]) new Comparable[size()];
 		
 		SingleLinkedListNode<T> aux = getHead();
 		
 		int index = 0;
 		
-		while(!(aux.isNIL()) {
+		while(!(aux.isNIL())) {
 			array[index] = aux.getData();
-			index++;
 			aux = aux.getNext();
+			index++;
 		}
 		return array;
 	}
