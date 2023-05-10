@@ -40,35 +40,64 @@ public class SingleLinkedListImpl<T> implements LinkedList<T> {
             while(!(aux.isNIL()) && !(aux.getData().equals(element))) {
                 aux = aux.getNext();
             }
-            if(!(aux.isNIL)) { // no de Catarina não tem esse if, precisa?
-                search = aux.getData();
-            }
+            search = aux.getData();
         }
-       
 		return search;
 	}
 
 	@Override
 	public void insert(T element) {
-        if(element != null){
+        if(element != null) {
+			
+			SingleLinkedListNode<T> aux = getHead();
+			SingleLinkedListNode<T> newAux = new SingleLinkedListNode<>(element, this.getHead());
+			
             if(isEmpty) {
-//              SingleLinkedListNode<T> newAux = new SingleLinkedListNode<>(element, this.getHead());
-// 				this.setHead(newAux);   ---> não basta só o setHead não?
-                setHead(element);
+				setHead(newAux);
+				
             } else {
-                while(!(aux.isNIL)) {
+                while(!(aux.isNIL())) {
                     aux = aux.getNext();
-                }    
+                }
+				aux.data = element;
+				aux.next = new SingleLinkedListNode<>();
             }    
 	}
 
 	@Override
 	public void remove(T element) {
+		if(!(isEmpty()) && element != null) {
+			
+			SingleLinkedListNode<T> aux = getHead();
+			
+			if(getHead().getData.equals(element)) {
+				setHead(getHead().getNext());
+			} else {
+				while(!(aux.isNIL()) && !(aux.getData().equals(element))) {
+					aux = aux.getNext();
+				}
+				if(!(aux.getData().isNIL()) {
+					setData(aux.getNext().getData());
+					setNext(aux.getNext().getNext());
+					aux.getData() = 
+				}
+			}
+		}
 	}
 
 	@Override
 	public T[] toArray() {
-		T[] array = (T[]) new Comparable[this.size()];
+		T[] array = (T[]) new Comparable[size()];
+		
+		SingleLinkedListNode<T> aux = getHead();
+		
+		int index = 0;
+		
+		while(!(aux.isNIL()) {
+			array[index] = aux.getData();
+			index++;
+			aux = aux.getNext();
+		}
 		return array;
 	}
 
@@ -79,5 +108,4 @@ public class SingleLinkedListImpl<T> implements LinkedList<T> {
 	public void setHead(SingleLinkedListNode<T> head) {
 		this.head = head;
 	}
-
 }
