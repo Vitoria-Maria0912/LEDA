@@ -24,7 +24,7 @@ public class SingleLinkedListImpl<T> implements LinkedList<T> {
             size++;
             aux = aux.getNext();
         }
-		return size;
+	return size;
 	}
 
 	@Override
