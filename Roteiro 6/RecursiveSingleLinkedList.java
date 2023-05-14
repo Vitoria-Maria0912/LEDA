@@ -32,7 +32,7 @@ public class RecursiveSingleLinkedListImpl<T> implements LinkedList<T> {
 		
 		if(!(isEmpty()) && element != null) {
 			
-			if(!(getData().equals(element))){
+			if(getData().equals(element)){
 				search = getData();
 				
 			} else {
