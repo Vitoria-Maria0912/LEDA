@@ -77,7 +77,7 @@ public class DoubleLinkedListImpl<T> extends SingleLinkedListImpl<T> implements
 			if(auxHead.getData().equals(element)) {
 				found = auxHead.getData();
 				
-			} else if(auxLast.getData().equals(element)) { // acho que tem o "else", porque se um ocorrer o outro não precisa ser checado
+			} else if(auxLast.getData().equals(element)) { 
 				found = auxLast.getData();
 			}
 		}
