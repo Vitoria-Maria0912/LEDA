@@ -15,31 +15,62 @@ public class FloorCeilBSTImpl extends BSTImpl<Integer> implements FloorCeilBST {
 		
 		Integer floor = null;
 		
-		if(array != null) {
-			floor = floor(this.root, numero, floor);
+		if(array != null && array.length > 0) {
+			
+			for(Integer element : array) {
+				this.insert(element);
+			}
+
+			floor = floor(getRoot(), numero, null);
 		}
+		
 		return floor;
 	}
-	
-	
-	private Integer floor(BSTNode<Integer> node, double numero, Integer floor) {
-		
-		if(node.getData().compareTo((int) numero) < 0) {
-			return floor((BSTNode<Integer>) node.getLeft(), numero, floor);
-		
-		} else if(node.getData().compareTo((int) numero) > 0){
-			return floor((BSTNode<Integer>) node.getRight(), numero, floor);
+
+	private Integer floor(BSTNode<Integer> root2, double numero, Integer floor) {
+		if (!(root2.isEmpty())) {
+			if(numero < root2.getData()) {
+				floor = floor((BSTNode<Integer>) root2.getLeft(), numero, floor);
+				
+			} else if(numero > root2.getData()) {
+				floor = floor((BSTNode<Integer>) root2.getRight(), numero, root2.getData());
 			
-		} else {
-			floor = node.getData();
+			} else {
+				floor = root2.getData();
+			}
 		}
 		return floor;
 	}
 
 	@Override
 	public Integer ceil(Integer[] array, double numero) {
-		//TODO Implemente seu codigo aqui
-		throw new UnsupportedOperationException("Not implemented yet!");
+		Integer ceil = null;
+		
+		if(array != null && array.length > 0) {
+			
+			for(Integer element : array) {
+				this.insert(element);
+			}
+
+			ceil = ceil(getRoot(), numero, null);
+		}
+		
+		return ceil;
 	}
 
+	private Integer ceil(BSTNode<Integer> root2, double numero, Integer ceil) {
+		
+		if (!(root2.isEmpty())) {
+			if(numero < root2.getData()) {
+				ceil = ceil((BSTNode<Integer>) root2.getLeft(), numero, root2.getData());
+				
+			} else if(numero > root2.getData()) {
+				ceil = ceil((BSTNode<Integer>) root2.getRight(), numero, ceil);
+			
+			} else {
+				ceil = root2.getData();
+			}
+		}
+		return ceil;
+	}
 }
