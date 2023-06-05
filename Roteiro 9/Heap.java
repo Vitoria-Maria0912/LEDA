@@ -11,8 +11,9 @@ import util.Util;
  * heapify dessa heap deve comparar os elementos e colocar o menor sempre no
  * topo. Ou seja, admitindo um comparador normal (responde corretamente 2 < 3),
  * essa heap deixa os elementos menores no topo. Essa comparação não é feita
- * diretamente com os elementos armazenados, mas sim usando um comparator. 
- * Dessa forma, dependendo do comparator, a heap pode funcionar como uma max-heap 
+ * diretamente com os elementos armazenados, mas sim usando um comparator.
+ * Dessa forma, dependendo do comparator, a heap pode funcionar como uma
+ * max-heap
  * ou min-heap.
  */
 public class HeapImpl<T extends Comparable<T>> implements Heap<T> {
@@ -74,7 +75,7 @@ public class HeapImpl<T extends Comparable<T>> implements Heap<T> {
 		for (int i = 0; i <= this.index; i++) {
 			resp.add(this.heap[i]);
 		}
-		return (T[])resp.toArray(new Comparable[0]);
+		return (T[]) resp.toArray(new Comparable[0]);
 	}
 
 	// ///////////// METODOS A IMPLEMENTAR
@@ -85,21 +86,26 @@ public class HeapImpl<T extends Comparable<T>> implements Heap<T> {
 	 */
 	private void heapify(int position) {
 		
-		if(position >= 0 && position < this.size()) {
+		if(position >= 0 && position < size()) {
 			
 			int left = left(position);
 			int right = right(position);
 			
-			int largest = position;
+			int largestOrSmallest = position;
 			
-			while(this.heap[left] != null && this.heap[right] != null) {
-				
-				
+			if(left <= this.index && comparator.compare(getHeap()[left], getHeap()[position]) > 0) {
+				largestOrSmallest = left;
 			}
-			if(comparator.compare(this.heap[left], this.heap[right]) >= 0) {
-				largest = left;
-			} else {
-				largest = right;
+			
+			if(right <= this.index && comparator.compare(getHeap()[right], getHeap()[largestOrSmallest]) > 0) {
+				largestOrSmallest = right;
+			}
+			
+			if(largestOrSmallest != position) {
+				
+				Util.swap(getHeap(), position, largestOrSmallest);
+				
+				heapify(largestOrSmallest);
 			}
 		}
 	}
@@ -111,14 +117,37 @@ public class HeapImpl<T extends Comparable<T>> implements Heap<T> {
 			heap = Arrays.copyOf(heap, heap.length + INCREASING_FACTOR);
 		}
 		// /////////////////////////////////////////////////////////////////
-		// TODO Implemente a insercao na heap aqui.
-		throw new UnsupportedOperationException("Not implemented yet!");
+		insert(this.heap, element);
+	}
+
+	private void insert(T[] array, T element) {
+		
+		if(element != null) {
+			
+			int indice = ++this.index;
+			
+			while(indice > 0 && comparator.compare(array[parent(indice)], element) < 0) {
+				
+				array[indice] = array[parent(indice)];
+				indice = parent(indice);
+			}
+			
+			array[indice] = element;
+		}
 	}
 
 	@Override
 	public void buildHeap(T[] array) {
-		// TODO Auto-generated method stub
-		throw new UnsupportedOperationException("Not implemented yet!");
+		
+		if(array != null) {
+			
+			this.heap = array;
+			this.index = array.length - 1;
+			
+			for(int indice = this.index / 2; indice >= 0; indice--) {
+				heapify(indice);
+			}
+		}
 	}
 
 	@Override
@@ -126,6 +155,11 @@ public class HeapImpl<T extends Comparable<T>> implements Heap<T> {
 		
 		T rootElement = rootElement();
 		
+		if(!(this.isEmpty())) {
+			
+			this.heap[0] = this.heap[this.index--];
+			heapify(0);
+		}
 		return rootElement;
 	}
 
@@ -133,23 +167,44 @@ public class HeapImpl<T extends Comparable<T>> implements Heap<T> {
 	public T rootElement() {
 		
 		T rootElement = null;
-		
-		if(!(isEmpty())) {
+
+		if(!(this.isEmpty())) {
 			rootElement = this.heap[0];
+
 		}
-		
 		return rootElement;
 	}
 
 	@Override
 	public T[] heapsort(T[] array) {
-		// TODO Auto-generated method stub
-		throw new UnsupportedOperationException("Not implemented yet!");
+		
+		if(array != null && array.length > 1) {
+			
+			buildHeap(array);
+			
+			for(int indice = this.index; indice >= 0; indice--) {
+				
+				Util.swap(array, 0, indice);
+				
+				this.index--;
+				this.heapify(0);
+			}
+			
+			if(this.heap[0].compareTo(this.heap[1]) > 0) {
+				
+				int indice2inverso = array.length - 1;
+				
+				for(int indice2 = 0; indice2 < indice2inverso; indice2++) {
+					Util.swap(array, indice2, indice2inverso--);
+				}
+			}
+		}
+		return array;
 	}
 
 	@Override
 	public int size() {
-		return this.index - 1;
+		return this.index + 1;
 	}
 
 	public Comparator<T> getComparator() {
