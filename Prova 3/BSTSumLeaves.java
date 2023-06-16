@@ -19,11 +19,14 @@ package problems;
     private int sumLeavesRecursive(BSTNode<Integer> node, int sumLeaves){
 
       if(!(node.isEmpty())) {
+         
+         if(node.isLeave()){
+            sumLeaves += node.getData();
+         }
 
         sumLeaves = sumLeavesRecursive((BSTNode<Integer>) node.getLeft(), sumLeaves);
         sumLeaves = sumLeavesRecursive((BSTNode<Integer>) node.getRight(), sumLeaves);
 
-      		sumLeaves += node.getData();
       	}
       	
       	return sumLeaves;
