@@ -4,17 +4,8 @@ public class BinaryNumberGenerationImplementation implements BinaryNumberGenerat
 
     public List<String> generateBinaryNumbers(int k) {
         
-        ArrayDeque<String> queue = new ArrayDeque<>(k);
-        List<String> bStrings = new ArrayList<>();
-        queue.addLast("1");
-        int i = 0;
-        while (i < k) {
-            queue.addLast(queue.getFirst() + "0");
-            queue.addLast(queue.getFirst() + "1");
-            bStrings.add(queue.getFirst());
-            queue.removeFirst();
-            i++;
-        }
-        return bStrings;
+        List<String> binaryNumbers = new ArrayList<>();
+        
+        return binaryNumbers;
     }
 }
