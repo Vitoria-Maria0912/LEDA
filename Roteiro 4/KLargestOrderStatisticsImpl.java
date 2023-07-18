@@ -33,9 +33,21 @@ public class KLargestOrderStatisticsImpl<T extends Comparable<T>> implements KLa
 
 	@Override
 	public T[] getKLargest(T[] array, int k) {
-		
+			
 		if(orderStatistics(array, k) != null) {
-			return kLarguestArray(array, k);
+            
+			T[] KLargest = (T[]) new Comparable[k];
+		
+			orderStatistics(array, array.length - k);
+            
+			int indice = 0;
+            
+			for(int index = array.length - k; index < array.length; index++) {
+				KLargest[indice] = array[index];
+                indice++;
+			}
+		
+		    return KLargest;
 		}
 		
 		return (T[]) new Comparable[0];
@@ -76,23 +88,5 @@ public class KLargestOrderStatisticsImpl<T extends Comparable<T>> implements KLa
 		}
 		
 		return KLargest;
-	}
-	
-	public T[] ordena(T[] array, int left, int right) {
-		
-		int indexExterno = left + 1;
-		
-		while(indexExterno <= right) {
-			
-			int indexInterno = indexExterno;
-			
-			while(indexInterno > left && array[indexInterno].compareTo(array[indexInterno - 1]) < 0) {
-				Util.swap(array, indexInterno, indexInterno - 1);
-				indexInterno--;
-			}
-			indexExterno++;
-		}
-		
-		return array;
 	}
 }
