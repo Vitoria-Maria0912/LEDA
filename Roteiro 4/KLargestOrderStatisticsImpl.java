@@ -74,17 +74,4 @@ public class KLargestOrderStatisticsImpl<T extends Comparable<T>> implements KLa
 			return null;			
 		}
 	}
-
-	private T[] kLarguestArray(T[] array, int k) {
-		
-		T[] KLargest = (T[]) new Comparable[k];
-		
-		array = ordena(array, 0, array.length - 1);
-		
-		for(int index = 0; index < k; index++) {
-			KLargest[index] = array[index];
-		}
-		
-		return KLargest;
-	}
 }
