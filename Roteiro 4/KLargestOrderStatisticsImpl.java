@@ -2,8 +2,6 @@ package orderStatistic;
 
 import util.Util;
 
-// copiar o de catarina
-
 /**
  * Uma implementacao da interface KLargest que usa estatisticas de ordem para 
  * retornar um array com os k maiores elementos de um conjunto de dados/array.
